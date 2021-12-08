@@ -1,0 +1,31 @@
+{
+  "name": "fetch-rewards",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.15",
+    "pg": "^8.7.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "server": "node index.js",
+    "server:dev": "nodemon index.js",
+    "db:build": "node ./db/seed.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mbbzrc/fetch-rewards.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mbbzrc/fetch-rewards/issues"
+  },
+  "homepage": "https://github.com/mbbzrc/fetch-rewards#readme"
+}
