@@ -64,14 +64,26 @@ async function createInitialPayers() {
 async function createInitialTransactions() {
   try {
     const initialTransactions = [
-      { payer: "DANNON", activePoints: 300 },
-      { payer: "UNILEVER", activePoints: 50 },
+      {
+        payer: "DANNON",
+        activePoints: 300,
+        timestamp: "2020-10-02T12:00:000Z",
+      },
+      {
+        payer: "UNILEVER",
+        activePoints: 50,
+        timestamp: "2020-10-02T14:00:000Z",
+      },
       {
         payer: "MILLER COORS",
         activePoints: 500,
         timestamp: "2020-11-02T14:00:000Z",
       },
-      { payer: "DANNON", activePoints: 200 },
+      {
+        payer: "DANNON",
+        activePoints: 200,
+        timestamp: "2021-02-02T10:30:000Z",
+      },
       { payer: "MILLER COORS", activePoints: 30 },
     ];
     await Promise.all(
