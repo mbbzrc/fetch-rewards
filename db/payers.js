@@ -69,12 +69,12 @@ async function getPayerByName(payer) {
 async function getTotalPayerPoints() {
   try {
     const {
-      rows: [totalPoints],
+      rows: [{ totalPoints }],
     } = await client.query(`
-            SELECT SUM (points)
+            SELECT SUM (points) AS "totalPoints"
             FROM payers;
         `);
-    return totalPoints;
+    return Number(totalPoints);
   } catch (error) {
     throw error;
   }

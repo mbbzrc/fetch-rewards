@@ -9,6 +9,7 @@ const {
   createTransaction,
   updateTransaction,
   getAllActiveTransactions,
+  getAllTransactions,
 } = require("../db");
 
 apiRouter.get("/balance", async (req, res, next) => {
@@ -17,6 +18,15 @@ apiRouter.get("/balance", async (req, res, next) => {
     res.send(balance);
   } catch (error) {
     next(error);
+  }
+});
+
+apiRouter.get("/transaction-history", async (req, res, next) => {
+  try {
+    const transactions = await getAllTransactions();
+    res.send(transactions);
+  } catch (error) {
+    throw error;
   }
 });
 
@@ -49,7 +59,7 @@ apiRouter.post("/transaction", async (req, res, next) => {
 });
 
 apiRouter.patch("/spend", async (req, res, next) => {
-  const { spendPoints } = req.body;
+  const { points: spendPoints } = req.body;
   try {
     const availablePoints = await getTotalPayerPoints();
 
@@ -89,11 +99,9 @@ apiRouter.patch("/spend", async (req, res, next) => {
       i++;
     }
 
-    await Promise.all(
-      pointsSpent.forEach((item) => {
-        updatePayer(item);
-      })
-    );
+    pointsSpent.forEach(async (item) => {
+      await updatePayer(item);
+    });
 
     res.send({ message: "Your points have been redeemed.", pointsSpent });
   } catch (error) {

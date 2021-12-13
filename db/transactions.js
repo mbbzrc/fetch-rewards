@@ -62,8 +62,22 @@ async function getAllActiveTransactions() {
   }
 }
 
+async function getAllTransactions() {
+  try {
+    const { rows: transactions } = await client.query(`
+        SELECT id, payer, "activePoints", "spentPoints", timestamp
+        FROM transactions
+        ORDER BY timestamp;
+    `);
+    return transactions;
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   createTransaction,
   updateTransaction,
   getAllActiveTransactions,
+  getAllTransactions,
 };

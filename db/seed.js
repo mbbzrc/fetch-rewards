@@ -68,7 +68,7 @@ async function createInitialTransactions() {
       { payer: "UNILEVER", activePoints: 50 },
       {
         payer: "MILLER COORS",
-        activePoints: 50000,
+        activePoints: 500,
         timestamp: "2020-11-02T14:00:000Z",
       },
       { payer: "DANNON", activePoints: 200 },
