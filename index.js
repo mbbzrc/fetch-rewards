@@ -1,8 +1,6 @@
 const express = require("express");
 const server = express();
 
-// install cors
-
 const morgan = require("morgan");
 server.use(morgan("dev"));
 
@@ -10,7 +8,7 @@ server.use(express.json());
 
 server.use("/api", require("./routes"));
 
-const { client } = require("./db/client");
+const client = require("./db/client");
 
 server.use((error, req, res, next) => {
   res.status(500).send(error);

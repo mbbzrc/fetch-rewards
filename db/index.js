@@ -1,3 +1,4 @@
 module.exports = {
-  ...require("./client"),
+  ...require("./payers"),
+  ...require("./transactions"),
 };

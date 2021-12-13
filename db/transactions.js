@@ -1,27 +1,60 @@
-const { client } = require("./client");
+const client = require("./client");
 
-async function createTransaction({ payer, points }) {
+async function createTransaction(fields) {
+  const insertColumns = Object.keys(fields)
+    .map((key) => `"${key}"`)
+    .join(", ");
+
+  const insertValues = Object.keys(fields)
+    .map((_, index) => `$${index + 1}`)
+    .join(", ");
+
   try {
     const {
       rows: [transaction],
     } = await client.query(
-      `
-        INSERT INTO transactions (payer, points)
-        VALUES ($1, $2)
+      `      
+        INSERT INTO transactions (${insertColumns})
+        VALUES (${insertValues})
         RETURNING *;
     `,
-      [payer, points]
+      Object.values(fields)
     );
+
     return transaction;
   } catch (error) {
     throw error;
   }
 }
 
-async function getAllTransactions() {
+async function updateTransaction({ id, spendPoints }) {
+  try {
+    const {
+      rows: [transaction],
+    } = await client.query(
+      `
+      UPDATE transactions
+      SET "activePoints" = "activePoints" - $2,
+      "spentPoints" = "spentPoints" + $2
+      WHERE id = $1
+      RETURNING payer;
+    `,
+      [id, spendPoints]
+    );
+
+    return transaction;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getAllActiveTransactions() {
   try {
     const { rows: transactions } = await client.query(`
-        SELECT * FROM transactions;
+        SELECT id, payer, "activePoints", "spentPoints", timestamp
+        FROM transactions
+        WHERE "activePoints" > 0
+        ORDER BY timestamp;
     `);
     return transactions;
   } catch (error) {
@@ -31,5 +64,6 @@ async function getAllTransactions() {
 
 module.exports = {
   createTransaction,
-  getAllTransactions,
+  updateTransaction,
+  getAllActiveTransactions,
 };
