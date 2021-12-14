@@ -66,8 +66,7 @@ async function getAllTransactions() {
   try {
     const { rows: transactions } = await client.query(`
         SELECT id, payer, "activePoints", "spentPoints", timestamp
-        FROM transactions
-        ORDER BY timestamp;
+        FROM transactions;
     `);
     return transactions;
   } catch (error) {

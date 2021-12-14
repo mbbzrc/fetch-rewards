@@ -12,7 +12,6 @@ const client = require("./db/client");
 
 server.use((error, req, res, next) => {
   res.status(500).send(error);
-  // build out error logging
 });
 
 const PORT = process.env.PORT || 5000;

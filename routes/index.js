@@ -30,7 +30,7 @@ apiRouter.get("/transaction-history", async (req, res, next) => {
   }
 });
 
-apiRouter.get("/transactions", async (req, res, next) => {
+apiRouter.get("/active-transactions", async (req, res, next) => {
   try {
     const transactions = await getAllActiveTransactions();
     res.send(transactions);
@@ -40,7 +40,9 @@ apiRouter.get("/transactions", async (req, res, next) => {
 });
 
 apiRouter.post("/transaction", async (req, res, next) => {
-  const { payer, activePoints } = req.body;
+  let { payer, points: activePoints } = req.body;
+
+  payer = payer.toUpperCase();
 
   try {
     const existingPayer = await getPayerByName(payer);
